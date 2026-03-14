@@ -23,8 +23,8 @@ npm-debug.log*
 .env.local
 .env.*.local
 
-# AI Memory (optional - remove this line if you want to include it)
-# .ai_memory/
+# AI Memory
+.ai_memory/
 </>
 <task_progress>
 - [x] 创建.gitignore文件
