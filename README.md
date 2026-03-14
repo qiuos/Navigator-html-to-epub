@@ -12,15 +12,28 @@
 
 ## 安装
 
-### 开发模式安装
+### 方式一：下载Release（推荐）
 
-1. **构建扩展**
+1. 前往 [Releases](https://github.com/qiuos/Navigator-html-to-epub/releases) 页面
+2. 下载最新版本的 `navigator-extension.zip`
+3. 解压到任意目录
+4. 在Chrome中加载（见下方步骤）
+
+### 方式二：从源码构建
+
+1. **克隆项目到本地**
+   ```bash
+   git clone git@github.com:qiuos/Navigator-html-to-epub.git
+   cd Navigator-html-to-epub
+   ```
+
+2. **安装依赖并构建**
    ```bash
    npm install
    npm run build
    ```
 
-2. **在Chrome中加载**
+3. **在Chrome中加载**
    - 打开 `chrome://extensions/`
    - 开启右上角的「开发者模式」
    - 点击「加载已解压的扩展程序」
