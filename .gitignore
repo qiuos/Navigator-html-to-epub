@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# AI Memory (optional - remove this line if you want to include it)
+# .ai_memory/
+</>
+<task_progress>
+- [x] 创建.gitignore文件
+- [ ] 初始化git仓库
+- [ ] 添加远程仓库
+- [ ] 提交所有更改
+- [ ] 打上v0.1标签
+- [ ] 推送到GitHub
+- [ ] 推送标签
+</task_progress>
+</write_to_file>

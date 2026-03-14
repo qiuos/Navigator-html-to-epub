@@ -1,0 +1,19 @@
+{
+  "name": "navigator-epub",
+  "version": "1.0.0",
+  "description": "航海志 - 网页转EPUB浏览器插件",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite build --watch --mode development",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^6.2.0",
+    "@anthropic-ai/sdk": "^0.36.0"
+  },
+  "dependencies": {
+    "jszip": "^3.10.1"
+  }
+}
