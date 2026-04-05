@@ -13,14 +13,28 @@ import {
   isContentCandidate,
 } from '../utils/dom-utils.js';
 import { findSiteRule, applyRule } from './site-rules.js';
+import { scrollAndCollect } from './lazy-loader.js';
+
+/**
+ * preExtract 标识到懒加载配置的映射
+ */
+const PRE_EXTRACT_CONFIGS = {
+  feishu: {
+    contentSelector: '.editor-container',
+    scrollContainerSelector: null,
+    scrollStep: 400,
+    maxIterations: 500,
+    settleDelay: 300,
+  },
+};
 
 /**
  * 提取页面主要内容
  * @param {Document} doc - 当前页面的 DOM Document
  * @param {string} url - 当前页面 URL
- * @returns {{ html: string, textLength: number, imageCount: number }}
+ * @returns {Promise<{ html: string, textLength: number, imageCount: number }>}
  */
-export function extractContent(doc, url) {
+export async function extractContent(doc, url) {
   // Phase 0: 克隆文档，避免修改原始页面
   const clonedDoc = doc.cloneNode(true);
 
@@ -28,12 +42,24 @@ export function extractContent(doc, url) {
   const rule = findSiteRule(url);
   if (rule) {
     console.log(`[Navigator] 使用内置规则: ${rule.name}`);
-    const ruleContent = applyRule(clonedDoc, rule);
-    if (ruleContent) {
-      const cleaned = cleanupElement(ruleContent);
-      return buildResult(cleaned);
+
+    // 如果规则需要预提取（如懒加载网站）
+    if (rule.preExtract && PRE_EXTRACT_CONFIGS[rule.preExtract]) {
+      const config = PRE_EXTRACT_CONFIGS[rule.preExtract];
+      const collected = await scrollAndCollect(config);
+      if (collected && collected.textLength > 100) {
+        return collected;
+      }
+      console.log(`[Navigator] 滚动收集失败，回退到通用算法`);
+    } else {
+      // 常规规则提取
+      const ruleContent = applyRule(clonedDoc, rule);
+      if (ruleContent) {
+        const cleaned = cleanupElement(ruleContent);
+        return buildResult(cleaned);
+      }
+      console.log(`[Navigator] 规则提取失败，回退到通用算法`);
     }
-    console.log(`[Navigator] 规则提取失败，回退到通用算法`);
   }
 
   // Phase 2: 通用启发式算法
@@ -311,6 +337,12 @@ function cleanAttributes(el) {
     th: ['colspan', 'rowspan'],
     code: ['class'], // 保留语言标记
     pre: ['class'],
+    div: ['class'], // 保留 class 用于列表/待办样式
+    span: ['class'],
+    p: ['class'],
+    li: ['class'],
+    ul: ['class'],
+    ol: ['class'],
   };
 
   const allowed = keepAttrs[tag] || [];

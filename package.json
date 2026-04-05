@@ -1,6 +1,6 @@
 {
   "name": "navigator-epub",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "航海志 - 网页转EPUB浏览器插件",
   "private": true,
   "type": "module",

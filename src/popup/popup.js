@@ -70,7 +70,15 @@ async function init() {
   // 历史记录事件绑定
   $('btn-history').addEventListener('click', showHistoryPanel);
   $('btn-history-close').addEventListener('click', () => {
-    showPhase(state.content ? 'preview' : 'loading');
+    // 飞书诊断页面返回诊断，否则按内容状态
+    const isFeishu = state.url && (/\.feishu\.cn/.test(state.url) || /\.larksuite\.com/.test(state.url));
+    if (isFeishu) {
+      showPhase('diagnostic');
+    } else if (state.content) {
+      showPhase('preview');
+    } else {
+      showPhase('loading');
+    }
   });
 
   // 监听来自 Content Script 的消息
@@ -118,7 +126,19 @@ function handleMessage(message) {
     case 'CONTENT_EXTRACT_ERROR':
       showError(`内容提取失败: ${message.error}`);
       break;
+    case 'FEISHU_DIAG':
+      onFeishuDiag(message.data);
+      break;
   }
+}
+
+/**
+ * 飞书诊断结果
+ */
+function onFeishuDiag(data) {
+  const el = $('diagnostic-content');
+  if (!el) return;
+  el.textContent = JSON.stringify(data.sections, null, 2);
 }
 
 /**
@@ -293,6 +313,7 @@ function showPhase(phase) {
 
   // 隐藏所有区域
   Object.values(areas).forEach(el => el.classList.add('hidden'));
+  $('diagnostic-area')?.classList.add('hidden');
 
   // 显示对应区域
   switch (phase) {
@@ -314,6 +335,9 @@ function showPhase(phase) {
       break;
     case 'history':
       areas.history.classList.remove('hidden');
+      break;
+    case 'diagnostic':
+      $('diagnostic-area').classList.remove('hidden');
       break;
   }
 }

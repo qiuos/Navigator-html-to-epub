@@ -55,6 +55,7 @@ export default defineConfig({
       input: {
         popup: resolve(__dirname, 'src/popup/popup.html'),
         content: resolve(__dirname, 'src/content/content.js'),
+        'debug-feishu': resolve(__dirname, 'src/debug-feishu.js'),
         'service-worker': resolve(__dirname, 'src/background/service-worker.js'),
       },
       output: {

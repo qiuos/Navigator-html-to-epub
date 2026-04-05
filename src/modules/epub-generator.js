@@ -489,6 +489,113 @@ sub {
   max-width: 80%;
   margin: 2em auto;
 }
+
+/* ========================================
+   飞书文档样式
+   ======================================== */
+
+/* 列表块 */
+.block {
+  margin: 0.5em 0;
+}
+
+/* 项目符号列表 */
+.bullet-list-block,
+[class*="bullet"] {
+  margin-left: 1.5em;
+  position: relative;
+}
+
+.bullet-list-block::before,
+[class*="bullet"]::before {
+  content: "•";
+  position: absolute;
+  left: -1em;
+  color: #333;
+}
+
+/* 有序列表 */
+.ordered-list-block,
+[class*="ordered"] {
+  margin-left: 1.5em;
+}
+
+/* 待办事项 */
+.todo-block,
+[class*="todo"],
+[class*="checkbox"],
+[class*="task-item"] {
+  margin: 0.3em 0;
+  padding-left: 1.5em;
+  position: relative;
+}
+
+.todo-block::before,
+[class*="todo"]::before,
+[class*="checkbox"]::before {
+  content: "☐";
+  position: absolute;
+  left: 0;
+  font-size: 1em;
+}
+
+/* 已完成的待办 */
+[class*="checked"]::before,
+[class*="done"]::before,
+[class*="completed"]::before {
+  content: "☑";
+  color: #52c41a;
+}
+
+[class*="checked"],
+[class*="done"],
+[class*="completed"] {
+  color: #999;
+  text-decoration: line-through;
+}
+
+/* 飞书通用缩进 */
+[class*="indent"] {
+  margin-left: 1.5em;
+}
+
+/* 嵌套列表 */
+.block .block {
+  margin-left: 1.5em;
+}
+
+/* 段落块 */
+.text-block,
+[class*="text-block"] {
+  margin: 0.5em 0;
+}
+
+/* 标题块 */
+.heading-block,
+[class*="heading"] {
+  margin-top: 1em;
+  font-weight: bold;
+}
+
+/* 引用块 */
+.quote-block,
+[class*="quote"] {
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  border-left: 4px solid #ddd;
+  background: #f9f9f9;
+}
+
+/* 代码块 */
+.code-block,
+[class*="code-block"] {
+  font-family: "Courier New", Courier, monospace;
+  background: #f4f4f4;
+  padding: 0.8em 1em;
+  border-radius: 4px;
+  font-size: 0.9em;
+  overflow-x: auto;
+}
 `;
 }
 

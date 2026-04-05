@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "航海志 Navigator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "智能提取网页内容，一键转换为 EPUB 电子书",
   "icons": {
     "16": "assets/icon-16.png",

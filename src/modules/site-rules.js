@@ -113,6 +113,23 @@ const siteRules = [
     },
   },
   {
+    name: '飞书文档',
+    match: (url) => /\.feishu\.cn/.test(url) || /\.larksuite\.com/.test(url),
+    selectors: {
+      content: '.block.docx-page-block, .editor-container',
+      title: '.doc-title, [data-block-type="title"], h1',
+      remove: [
+        '.docx-comment-thread',
+        '.docx-toolbar',
+        '.docx-sidebar',
+        '.doc-header',
+        '.breadcrumb',
+      ],
+    },
+    // 需要滚动收集（飞书虚拟滚动）
+    preExtract: 'feishu',
+  },
+  {
     name: 'SegmentFault',
     match: (url) => /segmentfault\.com/.test(url),
     selectors: {

@@ -7,7 +7,7 @@
 import { extractContent } from '../modules/content-extractor.js';
 import { extractMetadata } from '../utils/metadata.js';
 
-(function () {
+(async function () {
   // 避免重复注入
   if (window.__navigatorExtracted) {
     console.log('[Navigator] 已提取过，使用缓存');
@@ -26,7 +26,7 @@ import { extractMetadata } from '../utils/metadata.js';
     console.log('[Navigator] 元数据:', metadata);
 
     // 提取正文内容
-    const content = extractContent(document, window.location.href);
+    const content = await extractContent(document, window.location.href);
     console.log(
       `[Navigator] 内容提取完成: ${content.textLength} 字, ${content.imageCount} 张图片`
     );
